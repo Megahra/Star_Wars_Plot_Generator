@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Star_Wars_Plot_Generator/static/css/main.26b60e01.chunk.css",
+    "main.js": "/Star_Wars_Plot_Generator/static/js/main.0953d1fb.chunk.js",
+    "main.js.map": "/Star_Wars_Plot_Generator/static/js/main.0953d1fb.chunk.js.map",
+    "runtime~main.js": "/Star_Wars_Plot_Generator/static/js/runtime~main.2c956f7b.js",
+    "runtime~main.js.map": "/Star_Wars_Plot_Generator/static/js/runtime~main.2c956f7b.js.map",
+    "static/js/2.bfedd293.chunk.js": "/Star_Wars_Plot_Generator/static/js/2.bfedd293.chunk.js",
+    "static/js/2.bfedd293.chunk.js.map": "/Star_Wars_Plot_Generator/static/js/2.bfedd293.chunk.js.map",
+    "index.html": "/Star_Wars_Plot_Generator/index.html",
+    "precache-manifest.22441ff095e63afb1bc8dd4202bb695b.js": "/Star_Wars_Plot_Generator/precache-manifest.22441ff095e63afb1bc8dd4202bb695b.js",
+    "service-worker.js": "/Star_Wars_Plot_Generator/service-worker.js",
+    "static/css/main.26b60e01.chunk.css.map": "/Star_Wars_Plot_Generator/static/css/main.26b60e01.chunk.css.map",
+    "static/media/logo.svg": "/Star_Wars_Plot_Generator/static/media/logo.5d5d9eef.svg"
+  }
+}
