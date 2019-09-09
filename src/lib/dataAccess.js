@@ -1,12 +1,13 @@
-export function fetchJSON(url, resource) {
-	//ToDo: handle paging
-
-	//return fetch(url + resource + pageParam = "")
-	return fetch(url + resource + "")
+export async function fetchJSON(url) {
+	return fetch(url)
 	.then(validateResponse)
 	.then(response=>response.json())
-	.then(function(responseData) {
-		return responseData;
+	.then(async function(response) {
+		//logResult(response.results.map(a => a.name));
+		if(!response.results) return response;
+		if(!response.next) return response.results;
+
+		return response.results.concat(await fetchJSON(response.next));
 	})
 	.catch(logError);
 }
@@ -26,19 +27,3 @@ function validateResponse(response) {
 	}
 	return response;
 }
-
-/*function mapResponse(responseData, resource) {
-	let tempObject = {};
-
-	if(resource === "people"){
-		tempObject["results"] = responseData.results.map(({name,gender}) => ({name,gender}));
-	} else {
-		tempObject["results"] = responseData.results.map(a => a.name);
-	}
-	logResult(tempObject.results); //Temp line
-	if(resource === "people") logResult(tempObject.results.map(a => a.name)); //Temp line */
-	//tempObject["next"] = responseData.next.match(/\/\?.*/)[0];
-/*  logResult(tempObject.next);
-
-	return tempObject;
-}*/

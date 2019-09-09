@@ -8,7 +8,7 @@ class Generator extends Component {
 	constructor(props){
 	    super(props);
 	    this.state = {
-			people: [ //is an array of objects containing name and gender properties
+			people: [ 
 		  		{
 		  			"name": "Luke Skywalker", 
 		  		 	"gender": "male"
@@ -18,7 +18,14 @@ class Generator extends Component {
 		  		 	"gender": "n/a"
 		  		}
 		  	], 
-			planets: ["Tattoine", "Hoth"], //is an array of name properties
+			planets: [
+				{
+					"name": "Tattoine"
+				},
+				{
+					"name": "Hoth"
+				}
+			], 
 			plotTitle: "",
 			plotText: "",
 			personA: "",
@@ -28,7 +35,6 @@ class Generator extends Component {
 	}
 
 	onClickButton = () => {
-		console.log("TEST: " + this.state.people[1].name);
 		this.setState({
 			plotText: generatePlot(plots, 
 				this.state.people.map(a => a.name), 
@@ -41,7 +47,10 @@ class Generator extends Component {
         .then(people=>this.setState({people}));
       
     	fetchPlanets()
-    	.then(planets=>this.setState({planets}));
+    	.then(planets=>{
+    		this.setState({planets});
+    		console.log("Ready!");
+    	});
 	}
 
 	componentDidMount(){
