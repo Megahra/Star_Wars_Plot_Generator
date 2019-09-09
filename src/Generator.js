@@ -1,55 +1,84 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./Generator.css";
 import plots from "./plots";
+import {fetchPeople, fetchPlanets} from "./lib/starWarsApi.js";
 
-let swapiPeople = {
-  0: ["Luke Skywalker", "male"],
-  1: ["R2-D2", "n/a"]
-}; //is an object of arrays containing name and gender properties
-let swapiPlanets = ["Tattoine", "Hoth"]; //is an array of name properties
-
-//function Generator() {
 class Generator extends Component {
-  state = {
-  	plotText: replacePlaceholders(plots[0])
-  }
+	
+	constructor(props){
+	    super(props);
+	    this.state = {
+			people: [ //is an array of objects containing name and gender properties
+		  		{
+		  			"name": "Luke Skywalker", 
+		  		 	"gender": "male"
+		  		},
+		  		{
+		  			"name": "R2-D2", 
+		  		 	"gender": "n/a"
+		  		}
+		  	], 
+			planets: ["Tattoine", "Hoth"], //is an array of name properties
+			plotTitle: "",
+			plotText: "",
+			personA: "",
+			personB: "",
+			planetA: ""
+		}
+	}
 
-  onClickButton = () => {
-	this.setState({
-		plotText: generatePlot(plots)
-	})
-  }
+	onClickButton = () => {
+		console.log("TEST: " + this.state.people[1].name);
+		this.setState({
+			plotText: generatePlot(plots, 
+				this.state.people.map(a => a.name), 
+				this.state.planets.map(a => a.name))
+		})
+	}
 
-  render() {
-    return (
-      <div className="Generator">
-        <button onClick={this.onClickButton}>Generate Plot</button>
-        <p>{this.state.plotText}</p>
-      </div>
-    );
-  }
+	getData(){
+    	fetchPeople()
+        .then(people=>this.setState({people}));
+      
+    	fetchPlanets()
+    	.then(planets=>this.setState({planets}));
+	}
+
+	componentDidMount(){
+    	this.getData();
+	}
+
+	render() {
+	    return (
+	      <div className="Generator">
+	        <button onClick={this.onClickButton}>Generate New Plot</button>
+	        <h1>{this.state.plotTitle}</h1>
+	        <p>{this.state.plotText}</p>
+	        <div>
+	        	<p>List of resources:</p>
+	        	<ul>
+	        		<li></li>
+	        	</ul>
+	        </div>
+	      </div>
+	    );
+	}
 }
 
-//ToDo: Get SWAPI data and put it into the global variables swapiPeople and swapiPlanets
-function fetchPlaceholders() {
-  return true;
-}
-
-function generatePlot(plots) {
-  let plot = randomizePlot(plots);
-  return replacePlaceholders(plot);
+function generatePlot(plots, peopleNames, planetNames) {
+  let plot = randomizeElement(plots);
+  return replacePlaceholders(plot, peopleNames, planetNames);
 }
 
 //Optional: Replace pronouns depending on gender (would need to insert pronoun-placeholders into texts first)
-function replacePlaceholders(plot) {
+function replacePlaceholders(plot, peopleNames, planetNames) {
   //ToDo: fetchPlaceholders()
-  let personA = randomizeElement("person");
-  let personB = randomizeElement("person");
+  let personA = randomizeElement(peopleNames);
+  let personB = randomizeElement(peopleNames);
   while (personA === personB) {
-    personB = randomizeElement("person");
+    personB = randomizeElement(peopleNames);
   }
-  let planetA = randomizeElement("planet");
+  let planetA = randomizeElement(planetNames);
 
   return plot
     .replace(/:personA:/g, personA)
@@ -57,21 +86,8 @@ function replacePlaceholders(plot) {
     .replace(/:planetA:/g, planetA);
 }
 
-//Returns the name property of the element
-function randomizeElement(type) {
-  if (type === "person") {
-    let swapiPeopleKeys = Object.keys(swapiPeople);
-    let randomPeopleKey = swapiPeopleKeys[randomIntFromInterval(0, swapiPeopleKeys.length - 1)];
-    return swapiPeople[randomPeopleKey][0];
-
-  } else if (type === "planet") {
-    let randomPlanet = swapiPlanets[randomIntFromInterval(0, swapiPlanets.length - 1)];
-    return randomPlanet;
-  }
-}
-
-function randomizePlot(plots) {
-  return plots[randomIntFromInterval(0, plots.length - 1)];
+function randomizeElement(array) {
+	return array[randomIntFromInterval(0, array.length - 1)]
 }
 
 function randomIntFromInterval(min, max) {
