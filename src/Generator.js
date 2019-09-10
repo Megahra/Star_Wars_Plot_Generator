@@ -28,6 +28,7 @@ class Generator extends Component {
 					"name": "Hoth"
 				}
 			], 
+			dataFetched: false,
 			plotTitle: "",
 			plotText: "",
 			personA: "",
@@ -62,15 +63,20 @@ class Generator extends Component {
         .then(people=> console.log(people));
 	}
 
-	getData(){
-    	fetchPeople()
-        .then(people=>this.setState({people}));
-      
+	getData(){ 
     	fetchPlanets()
     	.then(planets=>{
     		this.setState({planets});
     		console.log("Ready!");
     	});
+
+    	fetchPeople()
+        .then(people=> {
+        	this.setState({
+        		people: people,
+        		dataFetched: true
+        	})
+        });
 	}
 
 	componentDidMount(){
@@ -80,13 +86,13 @@ class Generator extends Component {
 	render() {
 	    return (
 	      <div className="Generator">
-	        <button onClick={this.onClickButton}>Generate New Plot</button>
+	        <Button id="generatorButton" color="primary" size="lg" onClick={this.onClickButton} disabled={this.state.dataFetched === false}>Generate New Plot</Button>
 	        <h1>{this.state.plotTitle}</h1>
 	        <p dangerouslySetInnerHTML={{__html: this.state.plotText}}></p> 
 	        <div>{this.state.plotResources}
 	        </div>
 	        <input id="searchinput" type="text" value={this.state.searchInput} onChange={this.handleChange}/>
-	        <button onClick={this.onClickSearchButton}>Search</button>
+	        <Button color="secondary" size="sm" onClick={this.onClickSearchButton}>Search</Button>
 	      </div>
 	    );
 	}
