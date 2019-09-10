@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import "./Generator.css";
 import plots from "./plots";
-import {fetchPeople, fetchPlanets} from "./lib/starWarsApi.js";
+import {titles, wildcards} from "./titles.js";
+import {fetchPeople, fetchPlanets, searchPeople, searchPlanets} from "./lib/starWarsApi.js";
+import { Button } from 'reactstrap';
 
 class Generator extends Component {
 	
@@ -10,12 +12,12 @@ class Generator extends Component {
 	    this.state = {
 			people: [ 
 		  		{
-		  			"name": "Luke Skywalker", 
-		  		 	"gender": "male"
+		  			"name": "Leia Organa", 
+		  		 	"gender": "female"
 		  		},
 		  		{
-		  			"name": "R2-D2", 
-		  		 	"gender": "n/a"
+		  			"name": "Lando Calrissian", 
+		  		 	"gender": "male"
 		  		}
 		  	], 
 			planets: [
@@ -30,16 +32,34 @@ class Generator extends Component {
 			plotText: "",
 			personA: "",
 			personB: "",
-			planetA: ""
-		}
+			planetA: "",
+			plotResources: "",
+			searchInput: "name"
+		};
+		this.handleChange = this.handleChange.bind(this);
+    	this.onClickSearchButton = this.onClickSearchButton.bind(this);
 	}
 
 	onClickButton = () => {
+		const plotElements = randomizePlotElements(plots, this.state.people.map(a => a.name), this.state.planets.map(a => a.name));
+
 		this.setState({
-			plotText: generatePlot(plots, 
-				this.state.people.map(a => a.name), 
-				this.state.planets.map(a => a.name))
+			plotTitle: randomizeTitle(titles, wildcards),
+			personA: plotElements.personA,
+			personB: plotElements.personB,
+			planetA: plotElements.planetA,			
+			plotText: generatePlot(plotElements.plot, plotElements.personA, plotElements.personB, plotElements.planetA),
+			plotResources: buildResourcesHtml(plotElements.personA, plotElements.personB, plotElements.planetA)
 		})
+	}
+
+	handleChange(event) {
+		this.setState({searchInput: event.target.value})
+	}
+
+	onClickSearchButton = () => {
+		searchPeople(this.state.searchInput)
+        .then(people=> console.log(people));
 	}
 
 	getData(){
@@ -62,37 +82,68 @@ class Generator extends Component {
 	      <div className="Generator">
 	        <button onClick={this.onClickButton}>Generate New Plot</button>
 	        <h1>{this.state.plotTitle}</h1>
-	        <p>{this.state.plotText}</p>
-	        <div>
-	        	<p>List of resources:</p>
-	        	<ul>
-	        		<li></li>
-	        	</ul>
+	        <p dangerouslySetInnerHTML={{__html: this.state.plotText}}></p> 
+	        <div>{this.state.plotResources}
 	        </div>
+	        <input id="searchinput" type="text" value={this.state.searchInput} onChange={this.handleChange}/>
+	        <button onClick={this.onClickSearchButton}>Search</button>
 	      </div>
 	    );
 	}
 }
 
-function generatePlot(plots, peopleNames, planetNames) {
-  let plot = randomizeElement(plots);
-  return replacePlaceholders(plot, peopleNames, planetNames);
+function buildResourcesHtml(personA, personB, planetA) {
+	return ( //Add URLs <a href={getUrl(personA, "people")}> and seach bar: , Replace by:<input id="userinput" type="text" placeholder="name"><button onClick={this.onClickSearchButton}>Search</button>
+		<div>
+			<p>List of resources:</p>
+	        	<ul>
+	        		<li>Person: {personA}</li>
+	        		<li>Person: {personB}</li>
+	        		<li>Planet: {planetA}</li>
+	        	</ul>
+    	</div>
+		);
 }
 
-//Optional: Replace pronouns depending on gender (would need to insert pronoun-placeholders into texts first)
-function replacePlaceholders(plot, peopleNames, planetNames) {
-  //ToDo: fetchPlaceholders()
-  let personA = randomizeElement(peopleNames);
-  let personB = randomizeElement(peopleNames);
-  while (personA === personB) {
-    personB = randomizeElement(peopleNames);
-  }
-  let planetA = randomizeElement(planetNames);
+function getUrl(name, stateVariable) {
+	//search Array for the object with the right name value and return it's url property
+	/*return search(name, stateVariable).url;*/
+}
 
-  return plot
-    .replace(/:personA:/g, personA)
-    .replace(/:personB:/g, personB)
-    .replace(/:planetA:/g, planetA);
+function search(nameValue, myArray){
+    for (let i=0; i < myArray.length; i++) {
+        if (myArray[i].name === nameValue) {
+            return myArray[i];
+        }
+    }
+}
+
+function randomizeTitle(titles, wildcards) {
+	return randomizeElement(titles)
+		.replace(/:wildcards:/g, randomizeElement(wildcards));
+}
+
+function randomizePlotElements(plots, peopleNames, planetNames) {
+	const plotElements = {};
+
+	plotElements["plot"] = randomizeElement(plots);
+	plotElements["planetA"] = randomizeElement(planetNames);
+	plotElements["personA"] = randomizeElement(peopleNames);
+
+	let personB = randomizeElement(peopleNames);
+	while (plotElements.personA === personB) {
+		personB = randomizeElement(peopleNames);
+	}
+	plotElements["personB"] = personB;
+
+	return plotElements;
+}
+
+function generatePlot(plot, personA, personB, planetA) {
+	return plot
+		.replace(/:personA:/g, "<span className='changeable person' id='personA'>" + personA + "</span>")
+		.replace(/:personB:/g, "<span className='changeable person' id='personB'>" + personB + "</span>")
+		.replace(/:planetA:/g, "<span className='changeable planet' id='planetA'>" + planetA + "</span>");
 }
 
 function randomizeElement(array) {
