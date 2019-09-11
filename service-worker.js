@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Star_Wars_Plot_Generator/precache-manifest.22441ff095e63afb1bc8dd4202bb695b.js"
+  "/Star_Wars_Plot_Generator/precache-manifest.99dbf2d10e706897788ea3ad857ef252.js"
 );
 
 self.addEventListener('message', (event) => {
