@@ -1,0 +1,15 @@
+span {
+	text-transform: uppercase;
+}
+
+#headline {
+	margin: 40px 0px;
+}
+
+.plot {
+	font-family: Courier;
+}
+
+#generatorButton {
+	margin-bottom: 40px;
+}

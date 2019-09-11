@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import "./Generator.css";
-import plots from "./plots";
-import {titles, wildcards} from "./titles.js";
+import {plots, titles, wildcards} from "./plots";
 import {fetchPeople, fetchPlanets, searchPeople, searchPlanets} from "./lib/starWarsApi.js";
-import { Button } from 'reactstrap';
+import { 
+	Container,
+	Row,
+	Col,
+	Button } from 'reactstrap';
 
 class Generator extends Component {
 	
@@ -85,23 +88,41 @@ class Generator extends Component {
 
 	render() {
 	    return (
-	      <div className="Generator">
-	        <Button id="generatorButton" color="primary" size="lg" onClick={this.onClickButton} disabled={this.state.dataFetched === false}>Generate New Plot</Button>
-	        <h1>{this.state.plotTitle}</h1>
-	        <p dangerouslySetInnerHTML={{__html: this.state.plotText}}></p> 
-	        <div>{this.state.plotResources}
-	        </div>
-	        <input id="searchinput" type="text" value={this.state.searchInput} onChange={this.handleChange}/>
-	        <Button color="secondary" size="sm" onClick={this.onClickSearchButton}>Search</Button>
-	      </div>
+	    	<Container className="Generator">
+	    		<Row className="text-center">
+	    			<Col>
+	    				<h1 id="headline">Generate a random STAR WARS movie plot.</h1>
+	    			</Col>
+    			</Row>
+    			<Row className="text-center plot">
+	    			<Col>
+				        <h2>{this.state.plotTitle}</h2>
+				        <p dangerouslySetInnerHTML={{__html: this.state.plotText}}></p> 
+				        <div className="text-left">{this.state.plotResources}</div>
+			        </Col>
+		        </Row>
+		        <Row className="text-center">
+			        <Col>
+				        <Button id="generatorButton" color="primary" size="lg" onClick={this.onClickButton} disabled={this.state.dataFetched === false}>Generate New Plot</Button>
+			        </Col>
+		        </Row>
+	    	</Container>
 	    );
+	    /* Search field
+	    		<Row className="text-center">
+			        <Col>
+				        <input id="searchinput" type="text" value={this.state.searchInput} onChange={this.handleChange}/>
+				        <Button color="secondary" size="sm" onClick={this.onClickSearchButton}>Search</Button>
+			        </Col>
+		        </Row>
+        */
 	}
 }
 
 function buildResourcesHtml(personA, personB, planetA) {
 	return ( //Add URLs <a href={getUrl(personA, "people")}> and seach bar: , Replace by:<input id="userinput" type="text" placeholder="name"><button onClick={this.onClickSearchButton}>Search</button>
 		<div>
-			<p>List of resources:</p>
+			<h3>List of resources:</h3>
 	        	<ul>
 	        		<li>Person: {personA}</li>
 	        		<li>Person: {personB}</li>

@@ -1,10 +1,8 @@
 export async function fetchJSON(url) {
-	console.log(url);
 	return fetch(url)
 	.then(validateResponse)
 	.then(response=>response.json())
 	.then(async function(response) {
-		//console.log(response.results.map(a => a.name));
 		if(!response.results) return response;
 		if(!response.next) return response.results;
 

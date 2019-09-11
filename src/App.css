@@ -1,0 +1,39 @@
+.App {
+	background-image: url("./img/stars.jpg");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	background-attachment: fixed;
+}
+
+.pageFooter {
+	margin: 0;
+}
+#logo {
+	margin: 100px 50px;
+}
+
+.teaserText {
+	color: #4bd5ee;
+    font-family: "News Cycle", sans-serif;
+    font-weight: 400;
+    line-height: 1.35;
+    display: block;
+    font-size: 2em;
+    width: 12em;
+    margin: 0 auto;
+}
+
+.pageHead {
+	height: 800px;
+}
+
+.pageContent {
+	background-color: #ffffff;
+}
+
+.pageFooter {
+	color: #fff;
+	background-color: #000000;
+	padding: 0px;
+}
