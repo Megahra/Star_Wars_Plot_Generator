@@ -1,11 +1,3 @@
-.App {
-	background-image: url("./img/stars.jpg");
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover;
-	background-attachment: fixed;
-}
-
 .pageFooter {
 	margin: 0;
 }
@@ -31,6 +23,11 @@
 
 .pageHead {
 	height: 800px;
+	background-image: url("./img/stars.jpg");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	background-attachment: fixed;
 }
 
 .pageContent {
