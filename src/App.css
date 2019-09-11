@@ -10,7 +10,8 @@
 	margin: 0;
 }
 #logo {
-	margin: 100px 50px;
+	/*margin: 100px 50px;*/
+	max-width: calc(100% - 50px);
 }
 
 .teaserText {
@@ -20,8 +21,12 @@
     line-height: 1.35;
     display: block;
     font-size: 2em;
-    width: 12em;
-    margin: 0 auto;
+    max-width: 12em;
+    margin: 5% auto;
+}
+
+#arrow {
+	padding: 0px;
 }
 
 .pageHead {

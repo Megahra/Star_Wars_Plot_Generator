@@ -15,7 +15,6 @@ class App extends Component {
 	constructor(props){
 	    super(props);
 	    this.state = {
-
     	}
 	}
 
@@ -28,7 +27,7 @@ class App extends Component {
 	    				<Col>
 	    					<img id="logo" src={logo} alt="Star Wars Plot Generator Logo"/>
 			    			<h1 className="teaserText">A long time ago in a galaxy far, far away....</h1>
-			    			<p><img id="logo" src={arrow} alt=""/></p>
+			    			<p><img id="arrow" src={arrow} alt=""/></p>
 		    			</Col>
 		    		</Row>
 		    		<Row className="pageContent">
@@ -38,7 +37,7 @@ class App extends Component {
 		    		</Row>
 		    		<Row className="pageFooter text-center">
 		    			<Col>
-		    				<p>&copy; 2019 REBECCA WÖLFLE using the <a href="https://https://swapi.co/">Star Wars API</a>.</p>
+		    				<p>&copy; 2019 REBECCA WÖLFLE using the <a href="https://swapi.co/">Star Wars API</a>.</p>
 	    				</Col>
 		    		</Row>
 		    	</Container>
