@@ -40,8 +40,8 @@ class Generator extends Component {
 			plotResources: "",
 			searchInput: "name"
 		};
-		this.handleChange = this.handleChange.bind(this);
-    	this.onClickSearchButton = this.onClickSearchButton.bind(this);
+		/*this.handleChange = this.handleChange.bind(this);
+    	this.onClickSearchButton = this.onClickSearchButton.bind(this);*/
 	}
 
 	onClickButton = () => {
@@ -57,20 +57,19 @@ class Generator extends Component {
 		})
 	}
 
-	handleChange(event) {
+	/*handleChange(event) {
 		this.setState({searchInput: event.target.value})
 	}
 
 	onClickSearchButton = () => {
 		searchPeople(this.state.searchInput)
         .then(people=> console.log(people));
-	}
+	}*/
 
 	getData(){ 
     	fetchPlanets()
     	.then(planets=>{
     		this.setState({planets});
-    		console.log("Ready!");
     	});
 
     	fetchPeople()
@@ -132,9 +131,9 @@ function buildResourcesHtml(personA, personB, planetA) {
 		);
 }
 
-function getUrl(name, stateVariable) {
+/*function getUrl(name, stateVariable) {
 	//search Array for the object with the right name value and return it's url property
-	/*return search(name, stateVariable).url;*/
+	//return search(name, stateVariable).url;
 }
 
 function search(nameValue, myArray){
@@ -143,7 +142,7 @@ function search(nameValue, myArray){
             return myArray[i];
         }
     }
-}
+}*/
 
 function randomizeTitle(titles, wildcards) {
 	return randomizeElement(titles)
